@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR" style="background-color: #070907;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <title>Peguei no Click | Links Oficiais</title>
+    <meta name="description" content="Curadoria diária de achadinhos, cupons exclusivos e nossas lojas oficiais na Shopee e Mercado Livre.">
+    <link rel="canonical" href="https://pegueinoclick.com.br">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Peguei no Click | Não é flagra, é oferta">
+    <meta property="og:description" content="Acesse nosso canal VIP de achadinhos e nossas lojas oficiais no Mercado Livre e Shopee.">
+    <meta property="og:url" content="https://pegueinoclick.com.br">
+    <meta property="og:image" content="https://pegueinoclick.com.br/logo.png">
+
+    <!-- GOOGLE TAG MANAGER -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
+        
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            background-color: #070907 !important;
+            color: #f1f5f9 !important;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .bento-card {
+            background-color: #0e120e !important;
+            border: 1px solid #1a221a !important;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .bento-card:active {
+            transform: scale(0.97);
+            filter: brightness(1.1);
+        }
+
+        @media (min-width: 768px) {
+            .bento-card:hover {
+                transform: translateY(-3px);
+                border-color: rgba(153, 232, 35, 0.35) !important;
+            }
+        }
+
+        .glow-lime {
+            box-shadow: 0 0 35px -8px rgba(153, 232, 35, 0.22);
+            border-color: rgba(153, 232, 35, 0.4) !important;
+        }
+
+        .pulse-lime {
+            position: relative;
+        }
+        .pulse-lime::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: #99e823;
+            border-radius: 9999px;
+            animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.9); opacity: 0.8; }
+            70% { transform: scale(2.2); opacity: 0; }
+            100% { transform: scale(2.2); opacity: 0; }
+        }
+    </style>
+
+    <script>
+        function trackEvent(category, action, label) {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                'event': 'custom_interaction',
+                'event_category': category,
+                'event_action': action,
+                'event_label': label
+            });
+            console.log(`[Track] ${category} -> ${action} (${label})`);
+        }
+
+        async function shareProfile() {
+            const shareData = {
+                title: 'Peguei no Click | Links Oficiais',
+                text: 'Dá uma olhada nos achadinhos e nas lojas oficiais do Peguei no Click!',
+                url: window.location.href
+            };
+
+            if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+                try {
+                    await navigator.share(shareData);
+                    trackEvent('Social', 'Share', 'Native Share Mobile');
+                    return;
+                } catch (err) {
+                    if (err.name !== 'AbortError') console.warn('Erro nativo:', err);
+                }
+            }
+
+            if (navigator.clipboard && window.isSecureContext) {
+                try {
+                    await navigator.clipboard.writeText(window.location.href);
+                    showToast('Link copiado com sucesso! 🚀');
+                    trackEvent('Social', 'Share', 'Clipboard Copy');
+                    return;
+                } catch (err) {
+                    console.warn('Falha no clipboard:', err);
+                }
+            }
+
+            try {
+                const tempInput = document.createElement('input');
+                tempInput.value = window.location.href;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                showToast('Link copiado com sucesso! 🚀');
+                trackEvent('Social', 'Share', 'Legacy Copy');
+            } catch (err) {
+                showToast('Não foi possível copiar o link.');
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.innerText = message;
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            toast.classList.add('opacity-100');
+            setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                toast.classList.add('opacity-0', 'pointer-events-none');
+            }, 2500);
+        }
+    </script>
+</head>
+<body class="min-h-screen flex flex-col items-center py-8 px-4" style="background-color: #070907 !important; color: #f1f5f9 !important;">
+
+    <!-- GTM NoScript -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+    <!-- Toast de Notificação -->
+    <div id="toast" class="fixed top-6 bg-[#99e823] text-black font-black text-xs py-2.5 px-5 rounded-full shadow-2xl opacity-0 pointer-events-none transition-all duration-300 z-50">
+        Notificação
+    </div>
+
+    <!-- Header / Logo Oficial -->
+    <header class="w-full max-w-md mb-6 flex flex-col items-center relative">
+        <button onclick="shareProfile()" aria-label="Compartilhar Perfil" class="absolute -right-1 top-0 p-2.5 bg-[#121812] rounded-2xl border border-[#1f2a1f] text-slate-400 hover:text-white active:scale-90 transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
+        </button>
+
+        <!-- Container da Imagem Logo -->
+        <div class="w-24 h-24 rounded-[2.2rem] overflow-hidden p-1 mb-3.5 shadow-2xl shadow-[#99e823]/20 border border-[#99e823]/30 bg-[#99e823]">
+            <img src="logo.png" alt="Peguei no Click" class="w-full h-full object-cover rounded-[1.9rem]">
+        </div>
+
+        <h1 class="text-2xl font-black tracking-tight text-white flex items-center gap-1.5">
+            Peguei no Click
+        </h1>
+        <p class="text-xs text-[#99e823] font-bold tracking-wide mt-0.5">Não é flagra, é oferta!</p>
+
+        <div class="flex items-center gap-2 mt-2">
+            <span class="w-2 h-2 rounded-full bg-[#99e823] pulse-lime"></span>
+            <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Achadinhos & Lojas Oficiais</span>
+        </div>
+    </header>
+
+    <!-- Bento Grid -->
+    <main class="w-full max-w-md grid grid-cols-2 gap-3">
+
+        <!-- DESTAQUE PRINCIPAL: GRUPO VIP TELEGRAM -->
+        <a href="https://t.me/seu_canal" target="_blank" rel="noopener noreferrer"
+           onclick="trackEvent('Funil_VIP', 'Clique', 'Telegram')"
+           class="bento-card glow-lime col-span-2 p-5 rounded-[2rem] flex items-center justify-between relative overflow-hidden group">
+            <div class="absolute -right-8 -top-8 w-28 h-28 bg-[#99e823]/10 blur-2xl"></div>
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-2xl bg-[#99e823] flex items-center justify-center shadow-lg shadow-[#99e823]/30 group-hover:scale-105 transition-transform text-black">
+                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.891 8.146l-1.844 8.705c-.14.617-.504.77-.96.513l-2.81-2.072-1.355 1.304c-.15.15-.276.276-.566.276l.201-2.853 5.192-4.689c.226-.2-.049-.311-.35-.11l-6.417 4.041-2.766-.865c-.603-.188-.614-.603.125-.893l10.814-4.167c.501-.183.94.116.78.855z"/></svg>
+                </div>
+                <div>
+                    <span class="text-[9px] font-black uppercase text-[#99e823] tracking-wider">Comunidade VIP</span>
+                    <h2 class="text-base font-extrabold tracking-tight text-white">Canal de Achadinhos</h2>
+                    <p class="text-xs text-slate-400">Bugs de preço e cupons diários no Telegram</p>
+                </div>
+            </div>
+            <div class="w-9 h-9 rounded-full bg-[#162016] flex items-center justify-center text-slate-400 group-active:bg-[#99e823] group-active:text-black transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+            </div>
+        </a>
+
+        <!-- SEPARADOR: NOSSAS LOJAS -->
+        <div class="col-span-2 pt-2 pb-1 flex items-center gap-2">
+            <span class="h-[1px] bg-[#1a221a] flex-1"></span>
+            <span class="text-[9px] font-black uppercase text-slate-500 tracking-[0.25em]">Nossas Lojas Oficiais</span>
+            <span class="h-[1px] bg-[#1a221a] flex-1"></span>
+        </div>
+
+        <!-- NOSSA LOJA SHOPEE -->
+        <a href="https://shopee.com.br/shop/1744727774" target="_blank" rel="noopener noreferrer"
+           onclick="trackEvent('Loja_Propria', 'Clique', 'Shopee_Oficial')"
+           class="bento-card p-4 rounded-[1.8rem] flex flex-col justify-between aspect-square group">
+            <div class="w-10 h-10 rounded-xl bg-[#ee4d2d]/10 border border-[#ee4d2d]/20 flex items-center justify-center text-[#ee4d2d] group-active:bg-[#ee4d2d] group-active:text-white transition-colors">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M19 6h-2c0-2.76-2.24-5-5-5S7 3.24 7 6H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-7-3c1.66 0 3 1.34 3 3H9c0-1.66 1.34-3 3-3zm7 17H5V8h14v12zm-7-8c-1.66 0-3-1.34-3-3H7c0 2.76 2.24 5 5 5s5-2.24 5-5h-2c0 1.66-1.34 3-3 3z"/></svg>
+            </div>
+            <div>
+                <span class="text-[9px] font-black uppercase text-slate-500 tracking-wider">Catálogo Direto</span>
+                <h3 class="text-sm font-extrabold text-white">Nossa Loja na Shopee</h3>
+            </div>
+        </a>
+
+        <!-- NOSSA LOJA MERCADO LIVRE -->
+        <a href="https://www.mercadolivre.com.br/pagina/pegueinoclic#from=share_eshop" target="_blank" rel="noopener noreferrer"
+           onclick="trackEvent('Loja_Propria', 'Clique', 'MercadoLivre_Oficial')"
+           class="bento-card p-4 rounded-[1.8rem] flex flex-col justify-between aspect-square group">
+            <div class="w-10 h-10 rounded-xl bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center text-yellow-400 group-active:bg-yellow-400 group-active:text-black transition-colors">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M21 7h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 0S7.08 6.85 6.94 7H2c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h15c.75 0 1.41-.41 1.75-1.03l3.07-7.12c.11-.25.18-.52.18-.8V9c0-1.1-.9-2-2-2zM6 20H2V9h4v11zm15-8l-3 7H8V8l4.34-4.34L11.23 9H21v3z"/></svg>
+            </div>
+            <div>
+                <span class="text-[9px] font-black uppercase text-slate-500 tracking-wider">Compra Garantida</span>
+                <h3 class="text-sm font-extrabold text-white">Loja no Mercado Livre</h3>
+            </div>
+        </a>
+
+        <!-- GUIA AUTÔNOMO: AFILIADOS -->
+        <div class="bento-card col-span-2 p-5 rounded-[2rem] border-[#99e823]/30 bg-[#0c120c]">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-[9px] font-black uppercase text-black bg-[#99e823] px-2.5 py-1 rounded-md">Renda Extra</span>
+                <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Como Revender</span>
+            </div>
+            <h3 class="text-base font-extrabold text-white mb-1">Quer ganhar comissões?</h3>
+            <p class="text-xs text-slate-400 mb-4">Você pode divulgar os produtos das nossas lojas oficiais e receber comissões automáticas pelas plataformas.</p>
+            
+            <div class="grid grid-cols-3 gap-2 pt-2 border-t border-[#1a241a]">
+                <div class="text-center p-2 rounded-xl bg-black/40 border border-[#1f2a1f]">
+                    <span class="text-[10px] font-black text-[#99e823] block mb-0.5">1. ESCOLHA</span>
+                    <span class="text-[9px] text-slate-400 leading-tight block">Veja nossos produtos no ML ou Shopee</span>
+                </div>
+                <div class="text-center p-2 rounded-xl bg-black/40 border border-[#1f2a1f]">
+                    <span class="text-[10px] font-black text-[#99e823] block mb-0.5">2. DIVULGUE</span>
+                    <span class="text-[9px] text-slate-400 leading-tight block">Use seu link de afiliado oficial</span>
+                </div>
+                <div class="text-center p-2 rounded-xl bg-black/40 border border-[#1f2a1f]">
+                    <span class="text-[10px] font-black text-[#99e823] block mb-0.5">3. RECEBA</span>
+                    <span class="text-[9px] text-slate-400 leading-tight block">Comissão cai direto na sua conta</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- REDES SOCIAIS -->
+        <a href="https://instagram.com/pegueinoclick" target="_blank" rel="noopener noreferrer"
+           onclick="trackEvent('Social', 'Clique', 'Instagram')"
+           class="bento-card p-4 rounded-[1.6rem] flex items-center justify-center gap-2.5">
+            <svg class="w-4 h-4 text-pink-500 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            <span class="text-xs font-bold">Instagram</span>
+        </a>
+
+        <a href="https://tiktok.com/@pegueinoclick" target="_blank" rel="noopener noreferrer"
+           onclick="trackEvent('Social', 'Clique', 'TikTok')"
+           class="bento-card p-4 rounded-[1.6rem] flex items-center justify-center gap-2.5">
+            <svg class="w-4 h-4 text-white fill-current" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.03 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.9-.32-1.98-.23-2.81.3-.79.51-1.28 1.43-1.3 2.39-.02 1.13.72 2.19 1.75 2.61a2.6 2.6 0 002.59-.2c.79-.53 1.22-1.4 1.25-2.33.04-4.83.01-9.67.02-14.51z"/></svg>
+            <span class="text-xs font-bold">TikTok</span>
+        </a>
+
+        <!-- FOOTER SEGURANÇA -->
+        <div class="col-span-2 flex items-center justify-between p-4 bg-[#0a0f0a] border border-[#162016] rounded-[1.8rem] mt-2">
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-full bg-[#99e823]/10 text-[#99e823] flex items-center justify-center">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                </div>
+                <div>
+                    <span class="text-xs font-bold block text-slate-200">Ambiente 100% Seguro</span>
+                    <span class="text-[10px] text-slate-500">Lojas verificadas & oficiais</span>
+                </div>
+            </div>
+            <span class="text-[10px] font-black text-[#99e823] uppercase tracking-widest">SSL Ativo</span>
+        </div>
+
+    </main>
+
+    <footer class="mt-8 mb-4 text-center">
+        <p class="text-[9px] text-slate-600 font-bold uppercase tracking-[0.4em]">pegueinoclick.com.br</p>
+    </footer>
+
+</body>
+</html>
