@@ -354,93 +354,107 @@
 
         // Endpoint da Mini API do Google Sheets
         const API_VITRINE_URL = 'https://script.google.com/macros/s/AKfycbw2o_voX7Z_jHbwHKjFMUaFAxhWcDcrDb5J-3mUsDrml8SpR7CjfJmjobElCTVEDORT/exec';
+        const CACHE_KEY = 'peguei_vitrine_produtos';
 
-        async function carregarVitrine() {
-            try {
-                const response = await fetch(API_VITRINE_URL);
-                const produtos = await response.json();
+        function renderizarCards(produtos) {
+            if (!Array.isArray(produtos) || produtos.length === 0) return;
 
-                if (!Array.isArray(produtos) || produtos.length === 0) return;
+            const carrossel = document.getElementById('carrossel-produtos');
+            const secao = document.getElementById('secao-achadinhos');
 
-                const carrossel = document.getElementById('carrossel-produtos');
-                const secao = document.getElementById('secao-achadinhos');
+            carrossel.innerHTML = produtos.map(prod => {
+                const temShopee = Boolean(prod.link_shopee && prod.link_shopee.trim());
+                const temML = Boolean(prod.link_ml && prod.link_ml.trim());
+                const titulo = prod.titulo || 'Produto Destaque';
+                const tituloEscapado = titulo.replace(/'/g, "\\'");
+                const badge = prod.badge && prod.badge.trim() ? prod.badge.trim() : 'RECOMENDADO';
+                const imgUrl = prod.imagem_url || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80';
 
-                carrossel.innerHTML = produtos.map(prod => {
-                    const temShopee = Boolean(prod.link_shopee && prod.link_shopee.trim());
-                    const temML = Boolean(prod.link_ml && prod.link_ml.trim());
-                    const titulo = prod.titulo || 'Produto Destaque';
-                    const tituloEscapado = titulo.replace(/'/g, "\\'");
-                    const badge = prod.badge && prod.badge.trim() ? prod.badge.trim() : 'RECOMENDADO';
-                    const imgUrl = prod.imagem_url || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80';
-
-                    // Cenário 1: Disponível nas duas lojas (botões de escolha)
-                    if (temShopee && temML) {
-                        return `
-                            <div class="snap-start shrink-0 w-[165px] bento-card p-2.5 rounded-2xl flex flex-col justify-between">
-                                <div>
-                                    <div class="w-full h-32 rounded-xl bg-[#162016] overflow-hidden mb-2 relative">
-                                        <span class="absolute top-1.5 left-1.5 bg-[#99e823] text-black font-black text-[8px] px-1.5 py-0.5 rounded-md uppercase tracking-wider z-10">
-                                            ${badge}
-                                        </span>
-                                        <img src="${imgUrl}" alt="${titulo}" loading="lazy" class="w-full h-full object-cover">
-                                    </div>
-                                    <p class="text-[11px] font-bold text-white line-clamp-2 leading-tight mb-2" title="${titulo}">
-                                        ${titulo}
-                                    </p>
-                                </div>
-                                <div class="grid grid-cols-2 gap-1.5 pt-1.5 border-t border-white/5">
-                                    <a href="${prod.link_shopee}" target="_blank" rel="noopener noreferrer"
-                                       onclick="trackEvent('Destaques', 'Clique_Shopee', '${tituloEscapado}')"
-                                       class="text-center py-1.5 rounded-lg bg-[#ee4d2d]/15 text-[#ee4d2d] hover:bg-[#ee4d2d] hover:text-white transition-colors text-[10px] font-bold">
-                                        Shopee
-                                    </a>
-                                    <a href="${prod.link_ml}" target="_blank" rel="noopener noreferrer"
-                                       onclick="trackEvent('Destaques', 'Clique_ML', '${tituloEscapado}')"
-                                       class="text-center py-1.5 rounded-lg bg-yellow-400/15 text-yellow-400 hover:bg-yellow-400 hover:text-black transition-colors text-[10px] font-bold">
-                                        ML
-                                    </a>
-                                </div>
-                            </div>
-                        `;
-                    }
-
-                    // Cenário 2: Disponível em uma única loja
-                    const linkUnico = temShopee ? prod.link_shopee : prod.link_ml;
-                    const plataforma = temShopee ? 'Shopee' : 'Mercado Livre';
-                    const estiloBtn = temShopee
-                        ? 'bg-[#ee4d2d]/15 text-[#ee4d2d] group-hover:bg-[#ee4d2d] group-hover:text-white'
-                        : 'bg-yellow-400/15 text-yellow-400 group-hover:bg-yellow-400 group-hover:text-black';
-
+                if (temShopee && temML) {
                     return `
-                        <a href="${linkUnico}" target="_blank" rel="noopener noreferrer"
-                           onclick="trackEvent('Destaques', 'Clique_${temShopee ? 'Shopee' : 'ML'}', '${tituloEscapado}')"
-                           class="snap-start shrink-0 w-[165px] bento-card p-2.5 rounded-2xl flex flex-col justify-between group transition-transform active:scale-95">
+                        <div class="snap-start shrink-0 w-[165px] bento-card p-2.5 rounded-2xl flex flex-col justify-between">
                             <div>
                                 <div class="w-full h-32 rounded-xl bg-[#162016] overflow-hidden mb-2 relative">
                                     <span class="absolute top-1.5 left-1.5 bg-[#99e823] text-black font-black text-[8px] px-1.5 py-0.5 rounded-md uppercase tracking-wider z-10">
                                         ${badge}
                                     </span>
-                                    <img src="${imgUrl}" alt="${titulo}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                    <img src="${imgUrl}" alt="${titulo}" loading="lazy" class="w-full h-full object-cover">
                                 </div>
                                 <p class="text-[11px] font-bold text-white line-clamp-2 leading-tight mb-2" title="${titulo}">
                                     ${titulo}
                                 </p>
                             </div>
-                            <div class="w-full text-center py-1.5 rounded-lg text-[10px] font-bold transition-colors ${estiloBtn}">
-                                Ver na ${plataforma} &rarr;
+                            <div class="grid grid-cols-2 gap-1.5 pt-1.5 border-t border-white/5">
+                                <a href="${prod.link_shopee}" target="_blank" rel="noopener noreferrer"
+                                onclick="trackEvent('Destaques', 'Clique_Shopee', '${tituloEscapado}')"
+                                class="text-center py-1.5 rounded-lg bg-[#ee4d2d]/15 text-[#ee4d2d] hover:bg-[#ee4d2d] hover:text-white transition-colors text-[10px] font-bold">
+                                    Shopee
+                                </a>
+                                <a href="${prod.link_ml}" target="_blank" rel="noopener noreferrer"
+                                onclick="trackEvent('Destaques', 'Clique_ML', '${tituloEscapado}')"
+                                class="text-center py-1.5 rounded-lg bg-yellow-400/15 text-yellow-400 hover:bg-yellow-400 hover:text-black transition-colors text-[10px] font-bold">
+                                    ML
+                                </a>
                             </div>
-                        </a>
+                        </div>
                     `;
-                }).join('');
+                }
 
-                secao.classList.remove('hidden');
+                const linkUnico = temShopee ? prod.link_shopee : prod.link_ml;
+                const plataforma = temShopee ? 'Shopee' : 'Mercado Livre';
+                const estiloBtn = temShopee
+                    ? 'bg-[#ee4d2d]/15 text-[#ee4d2d] group-hover:bg-[#ee4d2d] group-hover:text-white'
+                    : 'bg-yellow-400/15 text-yellow-400 group-hover:bg-yellow-400 group-hover:text-black';
 
-            } catch (err) {
-                console.error('Erro ao carregar vitrine:', err);
-            }
+                return `
+                    <a href="${linkUnico}" target="_blank" rel="noopener noreferrer"
+                    onclick="trackEvent('Destaques', 'Clique_${temShopee ? 'Shopee' : 'ML'}', '${tituloEscapado}')"
+                    class="snap-start shrink-0 w-[165px] bento-card p-2.5 rounded-2xl flex flex-col justify-between group transition-transform active:scale-95">
+                        <div>
+                            <div class="w-full h-32 rounded-xl bg-[#162016] overflow-hidden mb-2 relative">
+                                <span class="absolute top-1.5 left-1.5 bg-[#99e823] text-black font-black text-[8px] px-1.5 py-0.5 rounded-md uppercase tracking-wider z-10">
+                                    ${badge}
+                                </span>
+                                <img src="${imgUrl}" alt="${titulo}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            </div>
+                            <p class="text-[11px] font-bold text-white line-clamp-2 leading-tight mb-2" title="${titulo}">
+                                ${titulo}
+                            </p>
+                        </div>
+                        <div class="w-full text-center py-1.5 rounded-lg text-[10px] font-bold transition-colors ${estiloBtn}">
+                            Ver na ${plataforma} &rarr;
+                        </div>
+                    </a>
+                `;
+            }).join('');
+
+            secao.classList.remove('hidden');
         }
 
-        // Inicia o carregamento dinâmico
+        async function carregarVitrine() {
+            // 1. Tenta carregar do cache local imediatamente (0ms)
+            const dadosEmCache = localStorage.getItem(CACHE_KEY);
+            if (dadosEmCache) {
+                try {
+                    renderizarCards(JSON.parse(dadosEmCache));
+                } catch (e) {
+                    console.warn('Erro ao ler cache:', e);
+                }
+            }
+
+            // 2. Busca na API em segundo plano para manter atualizado
+            try {
+                const response = await fetch(API_VITRINE_URL);
+                const produtos = await response.json();
+
+                if (Array.isArray(produtos) && produtos.length > 0) {
+                    renderizarCards(produtos);
+                    localStorage.setItem(CACHE_KEY, JSON.stringify(produtos));
+                }
+            } catch (err) {
+                console.error('Erro ao buscar dados novos da vitrine:', err);
+            }
+        }
         carregarVitrine();
     </script>
 </body>
