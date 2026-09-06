@@ -86,6 +86,15 @@
             70% { transform: scale(2.2); opacity: 0; }
             100% { transform: scale(2.2); opacity: 0; }
         }
+
+        /* Oculta barra de rolagem visualmente mantendo o scroll ativo */
+        .scrollbar-none::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-none {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
     </style>
 
     <script>
@@ -192,24 +201,40 @@
         <!-- DESTAQUE PRINCIPAL: GRUPO VIP TELEGRAM -->
         <div onclick="mostrarAviso()"
              class="bento-card glow-lime col-span-2 p-5 rounded-[2rem] flex items-center justify-between relative overflow-hidden group cursor-pointer opacity-85 transition-all active:scale-[0.99]">
-               <div class="absolute -right-8 -top-8 w-28 h-28 bg-[#99e823]/10 blur-2xl"></div>
-                <div class="flex items-center gap-4">
+            <div class="absolute -right-8 -top-8 w-28 h-28 bg-[#99e823]/10 blur-2xl"></div>
+            <div class="flex items-center gap-4">
                 <div class="w-12 h-12 rounded-2xl bg-[#99e823] flex items-center justify-center shadow-lg shadow-[#99e823]/30 group-hover:scale-105 transition-transform text-black">
-            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.891 8.146l-1.844 8.705c-.14.617-.504.77-.96.513l-2.81-2.072-1.355 1.304c-.15.15-.276.276-.566.276l.201-2.853 5.192-4.689c.226-.2-.049-.311-.35-.11l-6.417 4.041-2.766-.865c-.603-.188-.614-.603.125-.893l10.814-4.167c.501-.183.94.116.78.855z"/></svg>
-        </div>
-        <div>
-            <div class="flex items-center gap-2">
-                <span class="text-[9px] font-black uppercase text-[#99e823] tracking-wider">Comunidade VIP</span>
-                <span class="text-[9px] font-bold uppercase bg-[#99e823]/20 text-[#99e823] px-2 py-0.5 rounded-full">Em breve</span>
+                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.891 8.146l-1.844 8.705c-.14.617-.504.77-.96.513l-2.81-2.072-1.355 1.304c-.15.15-.276.276-.566.276l.201-2.853 5.192-4.689c.226-.2-.049-.311-.35-.11l-6.417 4.041-2.766-.865c-.603-.188-.614-.603.125-.893l10.814-4.167c.501-.183.94.116.78.855z"/></svg>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-[9px] font-black uppercase text-[#99e823] tracking-wider">Comunidade VIP</span>
+                        <span class="text-[9px] font-bold uppercase bg-[#99e823]/20 text-[#99e823] px-2 py-0.5 rounded-full">Em breve</span>
+                    </div>
+                    <h2 class="text-base font-extrabold tracking-tight text-white">Canal de Achadinhos</h2>
+                    <p class="text-xs text-slate-400">Bugs de preço e cupons diários no Telegram</p>
+                </div>
             </div>
-            <h2 class="text-base font-extrabold tracking-tight text-white">Canal de Achadinhos</h2>
-            <p class="text-xs text-slate-400">Bugs de preço e cupons diários no Telegram</p>
+            <div class="w-9 h-9 rounded-full bg-[#162016] flex items-center justify-center text-slate-400 group-hover:bg-[#99e823] group-hover:text-black transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+            </div>
         </div>
-    </div>
-    <div class="w-9 h-9 rounded-full bg-[#162016] flex items-center justify-center text-slate-400 group-hover:bg-[#99e823] group-hover:text-black transition-colors">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
-    </div>
-</div>
+
+        <!-- VITRINE DINÂMICA: RECOMENDADOS / CAMPEÕES DE VENDA (API GOOGLE SHEETS) -->
+        <section id="secao-achadinhos" class="col-span-2 hidden">
+            <div class="pt-2 pb-1.5 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-[#99e823] animate-pulse"></span>
+                    <span class="text-[10px] font-black uppercase text-slate-300 tracking-wider">Recomendados da Semana</span>
+                </div>
+                <span class="text-[9px] text-slate-500 font-bold uppercase tracking-wider">Arraste &rarr;</span>
+            </div>
+
+            <!-- Trilho de rolagem horizontal touch -->
+            <div id="carrossel-produtos" class="flex gap-3 overflow-x-auto pb-2 scrollbar-none snap-x snap-mandatory -mx-1 px-1">
+                <!-- Cards renderizados dinamicamente via JS -->
+            </div>
+        </section>
 
         <!-- SEPARADOR: NOSSAS LOJAS -->
         <div class="col-span-2 pt-2 pb-1 flex items-center gap-2">
@@ -303,26 +328,120 @@
     <footer class="mt-8 mb-4 text-center">
         <p class="text-[9px] text-slate-600 font-bold uppercase tracking-[0.4em]">pegueinoclick.com.br</p>
     </footer>
-<div id="toast-telegram" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-[#121612] border border-[#99e823]/40 text-white px-5 py-3 rounded-2xl shadow-2xl shadow-black/80 flex items-center gap-3 opacity-0 pointer-events-none transition-all duration-300 translate-y-4 z-50 max-w-[90vw]">
-    <div class="w-2.5 h-2.5 rounded-full bg-[#99e823] animate-pulse"></div>
-    <p class="text-xs font-medium text-slate-200">
-        <strong class="text-[#99e823]">Quase lá!</strong> Nosso canal exclusivo no Telegram sai nos próximos dias.
-    </p>
-</div>
 
-<script>
-let toastTimer;
-function mostrarAviso() {
-    const toast = document.getElementById('toast-telegram');
-    toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
-    toast.classList.add('opacity-100', 'translate-y-0');
-    
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => {
-        toast.classList.remove('opacity-100', 'translate-y-0');
-        toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
-    }, 3000);
-}
-</script>
+    <!-- Toast Telegram -->
+    <div id="toast-telegram" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-[#121612] border border-[#99e823]/40 text-white px-5 py-3 rounded-2xl shadow-2xl shadow-black/80 flex items-center gap-3 opacity-0 pointer-events-none transition-all duration-300 translate-y-4 z-50 max-w-[90vw]">
+        <div class="w-2.5 h-2.5 rounded-full bg-[#99e823] animate-pulse"></div>
+        <p class="text-xs font-medium text-slate-200">
+            <strong class="text-[#99e823]">Quase lá!</strong> Nosso canal exclusivo no Telegram sai nos próximos dias.
+        </p>
+    </div>
+
+    <!-- Scripts de Controle -->
+    <script>
+        let toastTimer;
+        function mostrarAviso() {
+            const toast = document.getElementById('toast-telegram');
+            toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+            toast.classList.add('opacity-100', 'translate-y-0');
+            
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.remove('opacity-100', 'translate-y-0');
+                toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+            }, 3000);
+        }
+
+        // Endpoint da Mini API do Google Sheets
+        const API_VITRINE_URL = 'https://script.google.com/macros/s/AKfycbw2o_voX7Z_jHbwHKjFMUaFAxhWcDcrDb5J-3mUsDrml8SpR7CjfJmjobElCTVEDORT/exec';
+
+        async function carregarVitrine() {
+            try {
+                const response = await fetch(API_VITRINE_URL);
+                const produtos = await response.json();
+
+                if (!Array.isArray(produtos) || produtos.length === 0) return;
+
+                const carrossel = document.getElementById('carrossel-produtos');
+                const secao = document.getElementById('secao-achadinhos');
+
+                carrossel.innerHTML = produtos.map(prod => {
+                    const temShopee = Boolean(prod.link_shopee && prod.link_shopee.trim());
+                    const temML = Boolean(prod.link_ml && prod.link_ml.trim());
+                    const titulo = prod.titulo || 'Produto Destaque';
+                    const tituloEscapado = titulo.replace(/'/g, "\\'");
+                    const badge = prod.badge && prod.badge.trim() ? prod.badge.trim() : 'RECOMENDADO';
+                    const imgUrl = prod.imagem_url || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80';
+
+                    // Cenário 1: Disponível nas duas lojas (botões de escolha)
+                    if (temShopee && temML) {
+                        return `
+                            <div class="snap-start shrink-0 w-[165px] bento-card p-2.5 rounded-2xl flex flex-col justify-between">
+                                <div>
+                                    <div class="w-full h-32 rounded-xl bg-[#162016] overflow-hidden mb-2 relative">
+                                        <span class="absolute top-1.5 left-1.5 bg-[#99e823] text-black font-black text-[8px] px-1.5 py-0.5 rounded-md uppercase tracking-wider z-10">
+                                            ${badge}
+                                        </span>
+                                        <img src="${imgUrl}" alt="${titulo}" loading="lazy" class="w-full h-full object-cover">
+                                    </div>
+                                    <p class="text-[11px] font-bold text-white line-clamp-2 leading-tight mb-2" title="${titulo}">
+                                        ${titulo}
+                                    </p>
+                                </div>
+                                <div class="grid grid-cols-2 gap-1.5 pt-1.5 border-t border-white/5">
+                                    <a href="${prod.link_shopee}" target="_blank" rel="noopener noreferrer"
+                                       onclick="trackEvent('Destaques', 'Clique_Shopee', '${tituloEscapado}')"
+                                       class="text-center py-1.5 rounded-lg bg-[#ee4d2d]/15 text-[#ee4d2d] hover:bg-[#ee4d2d] hover:text-white transition-colors text-[10px] font-bold">
+                                        Shopee
+                                    </a>
+                                    <a href="${prod.link_ml}" target="_blank" rel="noopener noreferrer"
+                                       onclick="trackEvent('Destaques', 'Clique_ML', '${tituloEscapado}')"
+                                       class="text-center py-1.5 rounded-lg bg-yellow-400/15 text-yellow-400 hover:bg-yellow-400 hover:text-black transition-colors text-[10px] font-bold">
+                                        ML
+                                    </a>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Cenário 2: Disponível em uma única loja
+                    const linkUnico = temShopee ? prod.link_shopee : prod.link_ml;
+                    const plataforma = temShopee ? 'Shopee' : 'Mercado Livre';
+                    const estiloBtn = temShopee
+                        ? 'bg-[#ee4d2d]/15 text-[#ee4d2d] group-hover:bg-[#ee4d2d] group-hover:text-white'
+                        : 'bg-yellow-400/15 text-yellow-400 group-hover:bg-yellow-400 group-hover:text-black';
+
+                    return `
+                        <a href="${linkUnico}" target="_blank" rel="noopener noreferrer"
+                           onclick="trackEvent('Destaques', 'Clique_${temShopee ? 'Shopee' : 'ML'}', '${tituloEscapado}')"
+                           class="snap-start shrink-0 w-[165px] bento-card p-2.5 rounded-2xl flex flex-col justify-between group transition-transform active:scale-95">
+                            <div>
+                                <div class="w-full h-32 rounded-xl bg-[#162016] overflow-hidden mb-2 relative">
+                                    <span class="absolute top-1.5 left-1.5 bg-[#99e823] text-black font-black text-[8px] px-1.5 py-0.5 rounded-md uppercase tracking-wider z-10">
+                                        ${badge}
+                                    </span>
+                                    <img src="${imgUrl}" alt="${titulo}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                </div>
+                                <p class="text-[11px] font-bold text-white line-clamp-2 leading-tight mb-2" title="${titulo}">
+                                    ${titulo}
+                                </p>
+                            </div>
+                            <div class="w-full text-center py-1.5 rounded-lg text-[10px] font-bold transition-colors ${estiloBtn}">
+                                Ver na ${plataforma} &rarr;
+                            </div>
+                        </a>
+                    `;
+                }).join('');
+
+                secao.classList.remove('hidden');
+
+            } catch (err) {
+                console.error('Erro ao carregar vitrine:', err);
+            }
+        }
+
+        // Inicia o carregamento dinâmico
+        carregarVitrine();
+    </script>
 </body>
 </html>
