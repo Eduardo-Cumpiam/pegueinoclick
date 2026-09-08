@@ -221,17 +221,34 @@
         </div>
 
         <!-- VITRINE DINÂMICA: RECOMENDADOS / CAMPEÕES DE VENDA (API GOOGLE SHEETS) -->
+        <!-- VITRINE DINÂMICA COM CONTROLES DE DESKTOP -->
         <section id="secao-achadinhos" class="col-span-2 hidden">
             <div class="pt-2 pb-1.5 flex items-center justify-between">
                 <div class="flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-[#99e823] animate-pulse"></span>
                     <span class="text-[10px] font-black uppercase text-slate-300 tracking-wider">Recomendados da Semana</span>
                 </div>
-                <span class="text-[9px] text-slate-500 font-bold uppercase tracking-wider">Arraste &rarr;</span>
+
+                <!-- Indicador Mobile + Botões Desktop -->
+                <div class="flex items-center gap-1.5">
+                    <span class="text-[9px] text-slate-500 font-bold uppercase tracking-wider md:hidden">Arraste &rarr;</span>
+
+                    <!-- Botão Voltar (Só Desktop) -->
+                    <button onclick="scrollCarrossel(-1)" aria-label="Voltar itens"
+                            class="hidden md:flex w-6 h-6 rounded-lg bg-[#121812] border border-[#1f2a1f] text-slate-400 hover:text-white hover:border-[#99e823]/40 items-center justify-center transition-all active:scale-90">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+                    </button>
+
+                    <!-- Botão Avançar (Só Desktop) -->
+                    <button onclick="scrollCarrossel(1)" aria-label="Avançar itens"
+                            class="hidden md:flex w-6 h-6 rounded-lg bg-[#121812] border border-[#1f2a1f] text-slate-400 hover:text-white hover:border-[#99e823]/40 items-center justify-center transition-all active:scale-90">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
             </div>
 
-            <!-- Trilho de rolagem horizontal touch -->
-            <div id="carrossel-produtos" class="flex gap-3 overflow-x-auto pb-2 scrollbar-none snap-x snap-mandatory -mx-1 px-1">
+            <!-- Trilho com rolagem suave (scroll-smooth) -->
+            <div id="carrossel-produtos" class="flex gap-3 overflow-x-auto pb-2 scrollbar-none snap-x snap-mandatory scroll-smooth -mx-1 px-1">
                 <!-- Cards renderizados dinamicamente via JS -->
             </div>
         </section>
@@ -339,6 +356,16 @@
 
     <!-- Scripts de Controle -->
     <script>
+
+        function scrollCarrossel(direcao) {
+            const carrossel = document.getElementById('carrossel-produtos');
+            if (!carrossel) return;
+    
+            // Rola aproximadamente a largura de um card + gap (180px)
+            const deslocamento = 180 * direcao;
+            carrossel.scrollBy({ left: deslocamento, behavior: 'smooth' });
+        }
+
         let toastTimer;
         function mostrarAviso() {
             const toast = document.getElementById('toast-telegram');
